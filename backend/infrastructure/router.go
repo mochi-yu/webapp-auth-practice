@@ -20,9 +20,12 @@ func NewRouter(db *ent.Client, cfg *config.Config) *gin.Engine {
 	mr := repository.NewMessageRepository(db)
 	mu := usecase.NewMessageUsecase(mr)
 	mc := controller.NewMessageController(mu)
+	miscC := controller.NewMiscController(cfg)
 
 	router.POST("/messages", mc.PostMessage)
 	router.GET("/messages", mc.GetMessages)
+
+	router.GET("/signin/github", miscC.SignIn)
 
 	return router
 }

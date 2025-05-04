@@ -7,14 +7,19 @@ import (
 )
 
 type Config struct {
-	Port             string `env:"PORT,notEmpty" envDefault:"8080"`
-	DBPort           string `env:"DB_PORT,notEmpty"`
-	DBUser           string `env:"DB_USER,notEmpty"`
-	DBPassword       string `env:"DB_PASSWORD,notEmpty"`
-	DBName           string `env:"DB_NAME,notEmpty"`
-	DBHost           string `env:"DB_HOST,notEmpty"`
-	DBDataSource     string
+	Port string `env:"PORT,notEmpty" envDefault:"8080"`
+
+	DBPort       string `env:"DB_PORT,notEmpty"`
+	DBUser       string `env:"DB_USER,notEmpty"`
+	DBPassword   string `env:"DB_PASSWORD,notEmpty"`
+	DBName       string `env:"DB_NAME,notEmpty"`
+	DBHost       string `env:"DB_HOST,notEmpty"`
+	DBDataSource string
+
 	CorsAllowOrigins string `env:"CORS_ALLOW_ORIGINS,notEmpty"`
+
+	GithubClientID     string `env:"GITHUB_CLIENT_ID,notEmpty"`
+	GithubClientSecret string `env:"GITHUB_CLIENT_SECRET,notEmpty"`
 }
 
 func NewConfig() (*Config, error) {
