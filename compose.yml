@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile.local
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: reflex -r '(\.go$$|go\.mod)' -s go run cmd/server/main.go
+    env_file:
+      - ./docker/backend/.env.local
+  db:
+    image: postgres:17.4-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: webapp-auth-practice
+    ports:
+      - "5432:5432"
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+      - data-volume:/var/log
+
+volumes:
+  data-volume:
