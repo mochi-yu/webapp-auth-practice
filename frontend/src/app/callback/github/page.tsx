@@ -16,13 +16,11 @@ export default async function GithubCallbackPage({ searchParams }: Props) {
     redirect("/");
   }
 
-  const res = await apiClient.get(`/signin/github?code=${code}`);
-  console.log(res);
+  await apiClient
+    .get(`/signin/github?code=${code}`, { cache: "no-store" })
+    .catch((err) => {
+      alert("ログインに失敗しました。少し待ってからやり直してください。");
+      console.error(err);
+    });
   redirect("/");
-
-  return (
-    <div>
-      <h1>GithubCallbackPage</h1>
-    </div>
-  );
 }

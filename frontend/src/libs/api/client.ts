@@ -1,7 +1,12 @@
 // fetchをラップしたAPIクライアント
 export const apiClient = {
-  async request(path: string, method: string, body?: unknown) {
-    const options: RequestInit = {
+  async request(
+    path: string,
+    method: string,
+    body?: unknown,
+    options?: RequestInit,
+  ) {
+    options = {
       method,
       headers: body
         ? {
@@ -9,6 +14,7 @@ export const apiClient = {
           }
         : undefined,
       body: body ? JSON.stringify(body) : undefined,
+      ...options,
     };
 
     const res = await fetch(
@@ -18,8 +24,8 @@ export const apiClient = {
     return res;
   },
 
-  async get(path: string) {
-    return this.request(path, "GET");
+  async get(path: string, options?: RequestInit) {
+    return this.request(path, "GET", undefined, options);
   },
 
   async post(path: string, body?: unknown) {
